@@ -37,9 +37,29 @@ Setting up dvc pipeline (with params)
             raise
 
     3. Add to main():
-    
+
     params = load_params(params_path = "params.yaml")
     param = params[component][param]
 
 10. Do "dvc repro" again to test the pipeline along with params
 11. Now git, add, commit, push
+
+Experiments with dvclive
+12. conda/pip install dvclive
+13. Add dvclive code block
+    1. from dvclive import Live
+    2. import yaml
+    3. load params.yaml file
+    4. add the code
+    with Live(save_dvc_exp = True) as live:
+        live.log_metric("accuracy", accuracy_score(y_test, y_test))
+        live.log_metric("precision", precision_score(y_test, y_test))
+        live.log_metric("recall", recall_score(y_test, y_test)) 
+
+        live.log_params(params)
+
+14. Do "dvc exp run", it will create new dvc.yaml file (if already not there) and dvclive directory (each run will be considered an experiment by dvc).
+15. Do "dvc exp show" on the terminal to see experiments or use extension on VSCode (install dvc extension)
+16. Do "dvc exp remove <exp-name>" to remove exp (optional) | "dvc exp apply <exp-name>" to reproduce prev exp
+17. Change params, re-run code (produce new experiments)
+18. Now git add, commit, push
