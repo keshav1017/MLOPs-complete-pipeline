@@ -108,7 +108,7 @@ def main():
 
         clf = train_model(X_train, y_train, params)
 
-        model_save_path = "models/model.pickle"
+        model_save_path = "models/model.pkl"
         save_model(clf, model_save_path)
     except Exception as e:
         logger.error(f"Failed to complete model building process: {e}")
